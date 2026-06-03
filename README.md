@@ -8,11 +8,10 @@ This is a capstone research project from the Department of Computational Social 
 
 ## Key Findings
 
-- **Vision-audio alignment exists without joint training.** Independently trained vision and audio models show meaningful representational alignment on semantically paired inputs (peak r = 0.295), emerging primarily in mid-to-late layers across all model combinations.
-- **Language is the strongest representational bridge.** Vision-language alignment peaked at r = 0.402 and audio-language at r = 0.357, both outperforming direct vision-audio alignment (r = 0.295), positioning language as a stronger cross-modal intermediary than direct perceptual co-occurrence.
-- **Audio supervision type matters more than vision model capacity.** BEATs-iter3+ (supervised) consistently outperformed BEATs-iter3 (self-supervised) across all conditions (Δr ≈ +0.055), while DINOv2-large showed only modest, inconsistent advantages over DINOv2-base.
-- **Semantically conditioned synthetic images outperform naturalistic frames in early layers.** SDXL-generated images conditioned on AudioCaps captions reached higher alignment earlier than naturalistic middle frames, challenging the assumption that naturalistic stimuli are preferable for alignment studies.
-
+- **Vision-audio alignment exists without joint training.** Independently trained vision and audio models show meaningful representational alignment on semantically paired inputs across all four model combinations and both image types, with alignment emerging primarily in mid-to-late layers rather than following a sharp late-layer peak.
+- **Language is the strongest representational bridge.** Vision-language LP peaked at r = 0.402 and audio-language LP at r = 0.357, both outperforming direct vision-audio alignment (r = 0.295). RSA tells a slightly different story: audio embeddings were more structurally similar to language than vision was (ρ = 0.290 vs. ρ = 0.263), while vision-audio alignment was weakest across both metrics (r = 0.295, ρ = 0.243).
+- **Audio supervision type matters more than vision model capacity.** BEATs-iter3+ (supervised) consistently outperformed BEATs-iter3 (self-supervised) across all model combinations (Δr ≈ +0.055). Vision model capacity had no consistent effect — DINOv2-large and DINOv2-base performed identically with BEATs-iter3+ (both r = 0.291) and nearly identically with BEATs-iter3 (Δr = +0.001).
+- **Generated images reach higher alignment earlier. Naturalistic frames catch up in final layers.** SDXL-generated images showed stronger alignment in earlier layers than naturalistic middle frames, but middle frames edged ahead in the final layer with BEATs-iter3+ (r = 0.295 vs. r = 0.291). This likely reflects that generated images are more semantically standardized, while middle frames introduce temporal and spatial variability that reduces alignment despite valid semantic pairing.
 ---
 
 ## Study Design
@@ -80,3 +79,14 @@ Corresponding author: Meenakshi Khosla, UC San Diego, Department of Cognitive Sc
 - Wang et al. (2025). Words that make language models perceive. arXiv:2510.02425
 - Chen et al. (2023). BEATs: Audio pre-training with acoustic tokenizers. ICML 2023.
 - Oquab et al. (2024). DINOv2: Learning robust visual features without supervision.
+
+---
+
+## Usage
+
+Run the notebooks in order:
+
+1. **`embedding_extraction.ipynb`** — extracts layer-wise embeddings from all models and saves them as `.npy` files
+2. **`alignment_analysis.ipynb`** — loads the embeddings and computes LP and RSA across all modality pairs; results saved to `results/`
+
+
